@@ -23,7 +23,7 @@ db.create_all()
  
   
 @app.route('/start')
-async def sts(): 
+def sts(): 
     return "123"
 
 @app.route('/solver/api/v1.0/getRespone/question=<text>', methods=['GET'])
