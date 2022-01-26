@@ -5,8 +5,22 @@ import asyncio
 from database import get_questions, add_new_question, add_new_user, get_users
 import jellyfish 
 from flask_sqlalchemy import SQLAlchemy
-from wsgi import app
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from config import db_link
 
+app = Flask(__name__)
+
+# Set up the SQLAlchemy Database to be a local file 'desserts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_link
+app.config['JSON_AS_ASCII'] = False 
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["postgresqlPostgresConnectionLimit"] = 200
+db = SQLAlchemy(app)
+db.create_all()
+ 
+ 
+ 
   
 @app.route('/start')
 async def sts(): 
@@ -56,4 +70,4 @@ def add_lzt_user():
     return jsonify({'result': True}), 201
 
 if __name__ == "__main__":
-    app.run()
+  app.run()
