@@ -29,7 +29,7 @@ def sts():
 @app.route('/solver/api/v1.0/getRespone/question=<text>', methods=['GET'])
 def get_answer(text):
     questions = get_questions()  
-    print(f"question: {questions}")
+    print(f"question: {text}")
     for item in questions: 
         text = text.replace("%20", " ")
         print(item.question) 
