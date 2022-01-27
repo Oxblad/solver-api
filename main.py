@@ -37,7 +37,7 @@ def get_answer(text):
         print(jellyfish.jaro_distance(text, item.question))
         if item.question == text or jellyfish.jaro_distance(text, item.question) >= item.floating_point:    
             return jsonify({'answer': item.answer, "is_clown" : item.is_clown, "type" : item.type, "floating_point": item.floating_point}) 
-        print("----"
+        print("----")
     return "No"
 
 @app.route('/solver/api/v1.0/addQuestion/', methods=['POST'])
