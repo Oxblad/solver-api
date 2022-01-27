@@ -29,14 +29,15 @@ def sts():
 @app.route('/solver/api/v1.0/getRespone/question=<text>', methods=['GET'])
 def get_answer(text):
     questions = get_questions()  
-    print(questions)
-    for item in questions:
-        print(item.question) 
-        print(item.question == text)
+    print(f"question: {questions}")
+    for item in questions: 
         text = text.replace("%20", " ")
-        print(f"ATr {text}")
+        print(item.question) 
+        print(item.question == text) 
+        print(jellyfish.jaro_distance(text, item.question))
         if item.question == text or jellyfish.jaro_distance(text, item.question) >= item.floating_point:    
             return jsonify({'answer': item.answer, "is_clown" : item.is_clown, "type" : item.type, "floating_point": item.floating_point}) 
+        print("----"
     return "No"
 
 @app.route('/solver/api/v1.0/addQuestion/', methods=['POST'])
