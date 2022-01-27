@@ -32,6 +32,7 @@ def get_answer(text):
     print(questions)
     for item in questions:
         print(item.question) 
+        print(item.question == text)
         text = text.replace("%20", " ")
         print(f"ATr {text}")
         if item.question == text or jellyfish.jaro_distance(text, item.question) >= item.floating_point:    
