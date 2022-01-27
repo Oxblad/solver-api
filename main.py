@@ -35,6 +35,7 @@ def get_answer(text):
         print(item.question) 
         print(item.question == text) 
         print(jellyfish.jaro_distance(text, item.question))
+        item.question = item.question.repalce("?", "")
         if item.question == text or jellyfish.jaro_distance(text, item.question) >= item.floating_point:    
             return jsonify({'answer': item.answer, "is_clown" : item.is_clown, "type" : item.type, "floating_point": item.floating_point}) 
         print("----")
