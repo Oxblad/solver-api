@@ -26,7 +26,7 @@ db.create_all()
 def sts(): 
     return "123"
 
-@app.route('/solver/api/v1.0/getRespone/question=<text>', methods=['GET'])
+@app.route('/solver/api/v1.0/getRespone/', methods=['GET'])
 def get_answer(text):
     questions = get_questions()  
     data = []
