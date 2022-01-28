@@ -30,13 +30,7 @@ def sts():
 def get_answer(text):
     questions = get_questions()  
     print(f"question: {text}")
-    for item in questions: 
-        text = text.replace("%20", " ")
-        item.question = item.question.replace("?", "")
-        if item.question.lower() == text.lower() or jellyfish.jaro_distance(text.lower(), item.question.lower()) >= item.floating_point:    
-            return jsonify({'answer': item.answer, "is_clown" : item.is_clown, "type" : item.type, "floating_point": item.floating_point}) 
-    return "No"
-
+    return jsonify({'answer': questions})  
 @app.route('/solver/api/v1.0/addQuestion/', methods=['POST'])
 def create_task(): 
     if not request.json: 
