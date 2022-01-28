@@ -11,7 +11,11 @@ from config import db_link
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 app = Flask(__name__)
- 
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["2 per minute"]
+)
 # Set up the SQLAlchemy Database to be a local file 'desserts.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = db_link
 app.config['JSON_AS_ASCII'] = False 
@@ -27,14 +31,14 @@ db.create_all()
 def sts(): 
     return "123"
 
-@app.route('/solver/api/v1.0/getRespone/', methods=['GET'])
+@app.route('/solver/api/v1.0/getRespone/', methods=['GET']) 
 def get_answer():
     questions = get_questions()  
     data = []
     for item in questions:
         data.append({"question" : item.question, "answer" : item.answer, "is_clown" : item.is_clown, "type": item.type, "floating_point" : item.floating_point})
     return jsonify(data)  
-@app.route('/solver/api/v1.0/addQuestion/', methods=['POST'])
+@app.route('/solver/api/v1.0/addQuestion/', methods=['POST']) 
 def create_task(): 
     if not request.json: 
         return jsonify({'result': False})
@@ -47,7 +51,7 @@ def create_task():
  
     return jsonify({'result': True}), 201
 
-@app.route('/user/api/v1.0/check/user=<text>', methods=['GET'])
+@app.route('/user/api/v1.0/check/user=<text>', methods=['GET']) 
 def get_lzt_user(text):
     users = get_users()  
     for item in users:
@@ -55,9 +59,8 @@ def get_lzt_user(text):
             return "Yes"
     return "No"
 
-@app.route('/users/api/v1.0/addUser/', methods=['POST'])
-def add_lzt_user(): 
-    print("ALLLASDFLLFLFD")
+@app.route('/users/api/v1.0/addUser/', methods=['POST']) 
+def add_lzt_user():  
     if not request.json: 
         return jsonify({'result': False})
     user = request.json['user'] 
