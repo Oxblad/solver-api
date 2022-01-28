@@ -29,8 +29,10 @@ def sts():
 @app.route('/solver/api/v1.0/getRespone/question=<text>', methods=['GET'])
 def get_answer(text):
     questions = get_questions()  
-    print(f"question: {text}")
-    return jsonify({'answer': questions})  
+    data = []
+    for item in questions:
+        data.append({"question" : item.question, "answer" : item.answer, "is_clown" : item.is_clown, "type": item.type, "floating_point" : item.floating_point})
+    return jsonify(data)  
 @app.route('/solver/api/v1.0/addQuestion/', methods=['POST'])
 def create_task(): 
     if not request.json: 
